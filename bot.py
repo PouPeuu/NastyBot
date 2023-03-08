@@ -2,6 +2,10 @@ import discord
 import os
 import time
 import random
+import requests
+import shutil
+
+from PIL import Image
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,9 +30,31 @@ async def NerdMessage(message):
         i += 1
     await message.channel.send('"'+reply+'" - :nerd: :nerd: :nerd:')
 
+async def FemboyFurryEdit(message):
+        # Download user pfp
+        r = requests.get(message.author.avatar.url, stream = True)
+        if r.status_code == 200:
+            r.raw.decode_content = True
+            with open("pfp.png","wb") as f:
+                shutil.copyfileobj(r.raw, f)
+
+        background = Image.open("images/furryfemboy.png")
+        width, height = background.size
+        
+        pfp = Image.open("pfp.png")
+        pfp.resize((256,256))
+        pfpWidth, pfpHeight = pfp.size
+
+        background.paste(pfp, (int(width/2-pfpWidth/2), 0))
+        background.save("real.png")
+
+        await message.channel.send(file=discord.File("real.png"))
+
+        os.remove("pfp.png")
+        os.remove("real.png")
 
 commonReplies = [EmojiReact]
-rareReplies = [NerdMessage]
+rareReplies = [NerdMessage, FemboyFurryEdit]
 
 class BotClient(discord.Client):
     async def on_ready(self):
@@ -41,7 +67,7 @@ class BotClient(discord.Client):
             return
 
         # Choose what the reply will be
-        common = random.randint(1,10) # change pls (maybe)
+        common = random.randint(1,10)
         rare = random.randint(1,100)
 
         if common == 1:
