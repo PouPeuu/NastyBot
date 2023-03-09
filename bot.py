@@ -4,14 +4,26 @@ import time
 import random
 import requests
 import shutil
+import textwrap
 from nltk.chat.rude import rude_chatbot as rudebot
 
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+
 from dotenv import load_dotenv
 
 load_dotenv()
 
 random.seed(time.time())
+
+async def getPFP(user):
+    # Download user pfp
+    r = requests.get(user.avatar.url, stream = True)
+    if r.status_code == 200:
+        r.raw.decode_content = True
+        with open("pfp.png","wb") as f:
+            shutil.copyfileobj(r.raw, f)
 
 # Common Replies
 
@@ -38,18 +50,13 @@ async def NerdMessage(message):
     await message.channel.send('"'+reply+'" - :nerd: :nerd: :nerd:')
 
 async def FemboyFurryEdit(message):
-        # Download user pfp
-        r = requests.get(message.author.avatar.url, stream = True)
-        if r.status_code == 200:
-            r.raw.decode_content = True
-            with open("pfp.png","wb") as f:
-                shutil.copyfileobj(r.raw, f)
+        await getPFP(message.author)
 
         background = Image.open("images/furryfemboy.png")
         width, height = background.size
         
         pfp = Image.open("pfp.png")
-        pfp.resize((256,256))
+        pfp = pfp.resize((256,256))
         pfpWidth, pfpHeight = pfp.size
 
         background.paste(pfp, (int(width/2-pfpWidth/2), 0))
@@ -60,9 +67,46 @@ async def FemboyFurryEdit(message):
         os.remove("pfp.png")
         os.remove("real.png")
 
+async def SpeechBubbleEdit(message):
+    await getPFP(message.author)
+
+    background = Image.open("images/speechbubble.png")
+    width, height = background.size
+    
+    pfp = Image.open("pfp.png")
+    pfp = pfp.resize((512,512))
+    pfpWidth, pfpHeight = pfp.size
+
+    background.paste(pfp, (int(width/2-pfpWidth/2)+50, int(height/2-pfpHeight/2)+50))
+
+    draw = ImageDraw.Draw(background)
+
+    font = ImageFont.truetype("fonts/ggsans-Normal.ttf",50)
+
+    text = ""
+    i = 0
+    for x in message.content:
+        # Make every other character uppercase
+        text += x.lower() if i % 2 == 0 else x.upper()
+        i += 1
+
+    margin = offset = 0
+    for line in textwrap.wrap(text, width=47):
+        draw.text((margin,offset), line, font=font, fill=(255,127,127,255))
+        offset+= font.getbbox(line)[3]
+
+    background.save("real.png")
+
+    await message.channel.send(file=discord.File("real.png"))
+
+    os.remove("pfp.png")
+    os.remove("real.png")
+
+
+
 commonReplies = [EmojiReact]
 uncommonReplies = [RudeMessage]
-rareReplies = [NerdMessage, FemboyFurryEdit]
+rareReplies = [NerdMessage, FemboyFurryEdit,SpeechBubbleEdit]
 
 class BotClient(discord.Client):
     async def on_ready(self):
