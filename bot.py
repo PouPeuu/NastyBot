@@ -4,6 +4,7 @@ import time
 import random
 import requests
 import shutil
+from nltk.chat.rude import rude_chatbot as rudebot
 
 from PIL import Image
 from dotenv import load_dotenv
@@ -18,6 +19,12 @@ async def EmojiReact(message):
     emojis = ["🤓","😴","🙄","😡","🖕"]
     # React with a random emoji from the emojis table
     await message.add_reaction(emojis[random.randint(0,len(emojis)-1)])
+
+# Uncommon Replies
+
+async def RudeMessage(message):
+    print("Rude Messange")
+    await message.channel.send(rudebot.respond(message.content))
 
 # Rare Replies
 
@@ -54,6 +61,7 @@ async def FemboyFurryEdit(message):
         os.remove("real.png")
 
 commonReplies = [EmojiReact]
+uncommonReplies = [RudeMessage]
 rareReplies = [NerdMessage, FemboyFurryEdit]
 
 class BotClient(discord.Client):
@@ -67,12 +75,17 @@ class BotClient(discord.Client):
             return
 
         # Choose what the reply will be
-        common = random.randint(1,10)
-        rare = random.randint(1,100)
+        common =    random.randint(1,10)
+        uncommon =  random.randint(1,25)
+        rare =      random.randint(1,100)
 
         if common == 1:
             # Choose random reply from the common replies table
             await commonReplies[random.randint(0,len(commonReplies)-1)](message)
+
+        if uncommon == 1:
+            # Choose random reply from the uncommon replies table
+            await uncommonReplies[random.randint(0,len(uncommonReplies)-1)](message)
 
         if rare == 1:
             # Choose random reply from the rare replies table
