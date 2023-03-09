@@ -35,7 +35,6 @@ async def EmojiReact(message):
 # Uncommon Replies
 
 async def RudeMessage(message):
-    print("Rude Messange")
     await message.channel.send(rudebot.respond(message.content))
 
 # Rare Replies
@@ -102,11 +101,28 @@ async def SpeechBubbleEdit(message):
     os.remove("pfp.png")
     os.remove("real.png")
 
+async def HitlerEdit(message):
+        await getPFP(message.author)
+
+        background = Image.open("images/adolf-hitler.png")
+        width, height = background.size
+        
+        pfp = Image.open("pfp.png")
+        pfp = pfp.resize((256,256))
+        pfpWidth, pfpHeight = pfp.size
+
+        background.paste(pfp, (int(width/2-pfpWidth/2)+300, 0))
+        background.save("real.png")
+
+        await message.channel.send(file=discord.File("real.png"))
+
+        os.remove("pfp.png")
+        os.remove("real.png")
 
 
 commonReplies = [EmojiReact]
 uncommonReplies = [RudeMessage]
-rareReplies = [NerdMessage, FemboyFurryEdit,SpeechBubbleEdit]
+rareReplies = [NerdMessage, FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]
 
 class BotClient(discord.Client):
     async def on_ready(self):
