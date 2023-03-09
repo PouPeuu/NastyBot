@@ -6,9 +6,9 @@ TOKEN=your token here
 
 <h2> List of all current replies: </h2>
 
-1 common reply [EmojiReact]
-1 uncommon reply [RudeMessage]
-4 rare replies [NerdMessage, FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]
+1 common reply [EmojiReact]  
+1 uncommon reply [RudeMessage]  
+4 rare replies [NerdMessage, FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]  
 
 <h2>Contributors</h2>
 eduouka and mcreatormadness are both poupeuu
