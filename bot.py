@@ -119,10 +119,32 @@ async def HitlerEdit(message):
         os.remove("pfp.png")
         os.remove("real.png")
 
+async def TrashEdit(message):
+        await getPFP(message.author)
+
+        background = Image.open("images/trash-background.png")
+        width, height = background.size
+        
+        pfp = Image.open("pfp.png").convert("RGBA")
+        pfp = pfp.resize((250,250))
+        pfpWidth, pfpHeight = pfp.size
+
+        pfp = pfp.rotate(15, expand=True)
+
+        background.paste(pfp, (int(width/2-pfpWidth/2)-25, 0),pfp)
+        foreground = Image.open("images/trash-foreground.png")
+        background.paste(foreground, (0,0), foreground)
+        background.save("real.png")
+
+        await message.channel.send(file=discord.File("real.png"))
+
+        os.remove("pfp.png")
+        os.remove("real.png")
+
 
 commonReplies = [EmojiReact]
 uncommonReplies = [RudeMessage,NerdMessage]
-rareReplies = [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]
+rareReplies = [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit, TrashEdit]
 
 class BotClient(discord.Client):
     async def on_ready(self):
