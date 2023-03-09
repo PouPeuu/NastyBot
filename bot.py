@@ -121,8 +121,8 @@ async def HitlerEdit(message):
 
 
 commonReplies = [EmojiReact]
-uncommonReplies = [RudeMessage]
-rareReplies = [NerdMessage, FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]
+uncommonReplies = [RudeMessage,NerdMessage]
+rareReplies = [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]
 
 class BotClient(discord.Client):
     async def on_ready(self):
