@@ -6,9 +6,9 @@ TOKEN=your token here
 
 <h2> List of all current replies: </h2>
 
-1 common reply [EmojiReact]  
-2 uncommon reply [RudeMessage, NerdMessage]  
-3 rare replies [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]  
+1 common reply [EmojiReact] 1 in 10 chance to select one of these  
+2 uncommon reply [RudeMessage, NerdMessage] 1 in 50 chance to select one of these
+3 rare replies [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit] 1 in 100 chance to select one of these
 
 <h2>Contributors</h2>
 eduouka and mcreatormadness are both poupeuu
