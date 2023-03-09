@@ -76,7 +76,7 @@ class BotClient(discord.Client):
 
         # Choose what the reply will be
         common =    random.randint(1,10)
-        uncommon =  random.randint(1,25)
+        uncommon =  random.randint(1,50)
         rare =      random.randint(1,100)
 
         if common == 1:
