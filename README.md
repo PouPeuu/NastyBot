@@ -9,10 +9,10 @@ TOKEN=your token here
 1 common reply [EmojiReact]  
 1 in 10 chance to select one of these  
 
-2 uncommon reply [RudeMessage, NerdMessage]  
+2 uncommon replies [RudeMessage, NerdMessage]  
 1 in 50 chance to select one of these  
 
-3 rare replies [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit]  
+4 rare replies [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit, TrashEdit]  
 1 in 100 chance to select one of these  
 
 <h2>Contributors</h2>
