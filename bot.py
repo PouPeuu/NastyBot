@@ -101,24 +101,6 @@ async def SpeechBubbleEdit(message):
     os.remove("pfp.png")
     os.remove("real.png")
 
-async def HitlerEdit(message):
-        await getPFP(message.author)
-
-        background = Image.open("images/adolf-hitler.png")
-        width, height = background.size
-        
-        pfp = Image.open("pfp.png")
-        pfp = pfp.resize((256,256))
-        pfpWidth, pfpHeight = pfp.size
-
-        background.paste(pfp, (int(width/2-pfpWidth/2)+300, 0))
-        background.save("real.png")
-
-        await message.channel.send(file=discord.File("real.png"))
-
-        os.remove("pfp.png")
-        os.remove("real.png")
-
 async def TrashEdit(message):
         await getPFP(message.author)
 
@@ -144,7 +126,7 @@ async def TrashEdit(message):
 
 commonReplies = [EmojiReact]
 uncommonReplies = [RudeMessage,NerdMessage]
-rareReplies = [FemboyFurryEdit, SpeechBubbleEdit, HitlerEdit, TrashEdit]
+rareReplies = [FemboyFurryEdit, SpeechBubbleEdit, TrashEdit]
 
 class BotClient(discord.Client):
     async def on_ready(self):
